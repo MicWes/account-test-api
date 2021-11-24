@@ -46,6 +46,11 @@ def event():
         return {"destination": {"id":destination, "balance":amount}}, 201
     elif type == "withdraw":
         origin = request.json["origin"]
+        for account in account_list:
+            if origin == account['id']:
+                account['balance'] = account['balance'] - amount #to do: verify limit
+                return {"destination": {"id":origin, "balance":account['balance']}}, 201
+        return "0", 404
     else: #type == transfer
         destination = request.json["destination"]
         origin = request.json["origin"]

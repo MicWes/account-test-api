@@ -38,21 +38,21 @@ GET /balance?account_id=100
 200 20
 
 --
-# Withdraw from non-existing account
+# Withdraw from non-existing account | check
 
 POST /event {"type":"withdraw", "origin":"200", "amount":10}
 
 404 0
 
 --
-# Withdraw from existing account
+# Withdraw from existing account | check
 
 POST /event {"type":"withdraw", "origin":"100", "amount":5}
 
 201 {"origin": {"id":"100", "balance":15}}
 
 --
-# Transfer from existing account
+# Transfer from existing account to new account
 
 POST /event {"type":"transfer", "origin":"100", "amount":15, "destination":"300"}
 
