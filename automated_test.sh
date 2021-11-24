@@ -1,5 +1,5 @@
 --
-# Reset state before starting tests
+# Reset state before starting tests | check
 
 POST /reset
 
@@ -7,7 +7,7 @@ POST /reset
 
 
 --
-# Get balance for non-existing account
+# Get balance for non-existing account | check
 
 GET /balance?account_id=1234
 
@@ -15,7 +15,7 @@ GET /balance?account_id=1234
 
 
 --
-# Create account with initial balance
+# Create account with initial balance | check
 
 POST /event {"type":"deposit", "destination":"100", "amount":10}
 
@@ -23,7 +23,7 @@ POST /event {"type":"deposit", "destination":"100", "amount":10}
 
 
 --
-# Deposit into existing account
+# Deposit into existing account | check
 
 POST /event {"type":"deposit", "destination":"100", "amount":10}
 
@@ -31,7 +31,7 @@ POST /event {"type":"deposit", "destination":"100", "amount":10}
 
 
 --
-# Get balance for existing account
+# Get balance for existing account | check
 
 GET /balance?account_id=100
 

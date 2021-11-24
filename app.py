@@ -1,12 +1,12 @@
 import os
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 # pylint: disable=C0103
 app = Flask(__name__)
 
 global account_list
-account_list = [] #account = {"id": "100", "amount": 10}
+account_list = [] #account = {"id": "100", "balance": 10}
 
 @app.route('/')
 def hello():
@@ -25,10 +25,11 @@ def hello():
 @app.route('/balance', methods=['GET'])
 def balance():
     account_id = request.args.get("account_id")
-    if account_id == "100":
-        return "20", 200
-    else:
-        return "0", 404
+    for account in account_list:
+        if account_id == account['id']: #found
+            return str(account['balance']), 200
+    #not found
+    return "0", 404
 
 @app.route('/event', methods=['POST'])
 def event():
@@ -37,6 +38,12 @@ def event():
 
     if type == "deposit":
         destination = request.json["destination"]
+        for account in account_list:
+            if destination == account['id']: #found
+                account['balance'] = account['balance'] + amount
+                return {"destination": {"id":destination, "balance":account['balance']}}, 201
+        account_list.append({"id":destination, "balance":amount}) #new account
+        return {"destination": {"id":destination, "balance":amount}}, 201
     elif type == "withdraw":
         origin = request.json["origin"]
     else: #type == transfer
