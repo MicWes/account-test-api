@@ -47,13 +47,23 @@ def event():
     elif type == "withdraw":
         origin = request.json["origin"]
         for account in account_list:
-            if origin == account['id']:
+            if origin == account['id']: #found
                 account['balance'] = account['balance'] - amount #to do: verify limit
                 return {"destination": {"id":origin, "balance":account['balance']}}, 201
-        return "0", 404
+        return "0", 404 #not found
     else: #type == transfer
         destination = request.json["destination"]
         origin = request.json["origin"]
+        for account in account_list:
+            if origin == account['id']: #found origin
+                account['balance'] = account['balance'] - amount #to do: verify limit
+                for account_dest in account_list:
+                    if destination == account_dest['id']: #found destination
+                        account_dest['balance'] = account_dest['balance'] + amount #plus destination balance
+                        return {"origin": {"id":origin, "balance":account['balance']}, "destination": {"id":destination, "balance":account_dest['balance']}}, 201
+                account_list.append({"id":destination, "balance":amount}) #new account
+                return {"origin": {"id":origin, "balance":account['balance']}, "destination": {"id":destination, "balance":amount}}, 201
+        return "0", 404 #not found
 
 @app.route('/reset', methods=['POST'])
 def reset():
