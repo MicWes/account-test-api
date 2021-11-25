@@ -10,10 +10,7 @@ account_list = [] #account = {"id": "100", "balance": 10}
 
 @app.route('/')
 def hello():
-    """Return a friendly HTTP greeting."""
-    message = "It's running!"
-
-    """Get Cloud Run environment variables."""
+    message = "Account Test API is running!"
     service = os.environ.get('K_SERVICE', 'Unknown service')
     revision = os.environ.get('K_REVISION', 'Unknown revision')
 
