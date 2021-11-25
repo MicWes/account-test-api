@@ -52,14 +52,14 @@ POST /event {"type":"withdraw", "origin":"100", "amount":5}
 201 {"origin": {"id":"100", "balance":15}}
 
 --
-# Transfer from existing account to new account
+# Transfer from existing account to new account | check
 
 POST /event {"type":"transfer", "origin":"100", "amount":15, "destination":"300"}
 
 201 {"origin": {"id":"100", "balance":0}, "destination": {"id":"300", "balance":15}}
 
 --
-# Transfer from non-existing account
+# Transfer from non-existing account | check
 
 POST /event {"type":"transfer", "origin":"200", "amount":15, "destination":"300"}
 

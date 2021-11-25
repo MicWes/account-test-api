@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 
 # pylint: disable=C0103
 app = Flask(__name__)
@@ -49,7 +49,7 @@ def event():
         for account in account_list:
             if origin == account['id']: #found
                 account['balance'] = account['balance'] - amount #to do: verify limit
-                return {"destination": {"id":origin, "balance":account['balance']}}, 201
+                return {"origin": {"id":origin, "balance":account['balance']}}, 201
         return "0", 404 #not found
     else: #type == transfer
         destination = request.json["destination"]
